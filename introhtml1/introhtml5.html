@@ -2,16 +2,79 @@
 <html lang="en">
     <head>
         <title>Document</title>
+        <style>
+            section{
+                float: left;
+                width: 400px;
+            }
+            aside{
+                float: right;
+                width: 200px;
+                text-align: center;
+                background-color: cadetblue;
+                border-radius: 10px;
+                color: darkblue;
+            }
+
+            nav {
+                background-color: gainsboro;
+                border-radius: 10px;
+                padding: 10px;
+            }
+            ul {
+                list-style-type: none;
+                margin: 0px;
+                padding: 0px;
+            }
+            ul li{
+                display: inline;
+                padding: 10px;
+            }
+        </style>
     </head>
     <body>
+        <nav>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">Portifólio</a></li>
+                <li><a href="">Artigos</a></li>
+                <li><a href="">Contato</a></li>
+            </ul>
+        </nav>
+        
         <main>
             <!-- main - contém o codigo principal da pagina -->
             <section>
                 <h1>Título 1</h1>
                 <article>
+                    <header>
+                        Cabeçalho
+                    </header>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum, laboriosam in. Veritatis, accusamus? Dignissimos maxime impedit totam, earum quas facere at voluptas vero dolorem laboriosam, soluta tempora obcaecati quis quae.</p>
+                    <footer>
+                        Rodapé
+                    </footer>                    
                 </article>
             </section>
+            <aside>
+                <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur eius obcaecati numquam ipsum, molestias praesentium accusamus minima, quam dolores similique enim magni ipsa doloremque blanditiis, hic exercitationem voluptatibus culpa aut!</h4>
+            </aside>
+            <p>
+                <audio controls>
+                    <source src="https://bit.ly/2yNWVhL"
+                        type="audio/mp3">
+                </audio>
+            </p>
+            <p>
+                <video controls>
+                    <source src=""
+                        type="video/mp4">
+                </video>
+            </p>
+
+            <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/7D4ljsSn3Lw?si=BhyGR9RVmDamHkuj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen></iframe>
         </main>        
     </body>
 </html>
