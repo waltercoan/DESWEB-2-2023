@@ -1,0 +1,32 @@
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after{
+    box-sizing: inherit;
+}
+p, h2, li {
+    font-size: 30px;
+    /*comentario*/
+    background-color: fuchsia;
+    font-family: "Verdana";
+    font-family: 'Verdana';
+    font-family: Verdana;
+    font-family: 'Courier New', Courier, monospace
+}
+h2 {
+    width: 300px;
+    height: 50px;
+    padding: 10px;
+    border: solid black ;
+    border-width: 5px 10px 15px 20px;
+    border-color: red blue green yellow;
+    border-color: rgb(100, 100, 100);
+    border-color: #fff;
+    margin: 30px;
+}
+p::after{
+    content: "+++";
+}
+p::before{
+    content: "***";
+}
