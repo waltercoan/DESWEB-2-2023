@@ -11,5 +11,7 @@ python -m pip install flask
 ## Executar o servidor
 ```
 cd formularios
-flask --app server run
+##flask --app server run
+flask --app server --debug run
+
 ```

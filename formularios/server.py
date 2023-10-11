@@ -8,3 +8,9 @@ def index():
     #return '''
     #       <h1>Eu nao acredito</h1> 
     #       '''
+
+@app.route("/servidor", methods=['POST'])
+def servidor():
+    dados = request.form
+    print(dados)
+    return ''
