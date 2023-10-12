@@ -6,7 +6,32 @@
     <body>
         <h1>Formulário 123123</h1>
         <form action="/servidor" method="POST">
-            <input type="text" name="nome" placeholder="123">
+
+            <input type="hidden" name="id" value="1">
+
+            <fieldset>
+                <label for="txtnome">Nome</label>
+                <input type="text" name="nome" id="txtnome"
+                    placeholder="123" required>
+            </fieldset>
+            <fieldset>
+                <label for="txtsenha">Senha</label>
+                <input type="password" name="senha" id="txtsenha">
+            </fieldset>
+            <fieldset>
+                <label for="txtdata">Data Nascimento</label>
+                <input type="date" name="datanasc" id="txtdata">
+            </fieldset>
+            <fieldset>
+                <label for="">Sexo</label>
+                <input type="radio" name="sexo" value="masc" checked>Masculino
+                <input type="radio" name="sexo" value="femi">Feminino
+            </fieldset>
+            <fieldset>
+                <label for="">Delicias</label>
+                <input type="checkbox" name="chocolate" value="chocolate">Chocolate
+                <input type="checkbox" name="coca" value="coca">Coquinha Gelada
+            </fieldset>
             <input type="submit" value="Enviar">
         </form>
     </body>
