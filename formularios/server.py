@@ -18,6 +18,10 @@ def servidor():
     print(dados.get('sexo'))
     print(dados.get('chocolate'))
     print(dados.get('coca'))
-    
+    print(dados.get('arquivo'))
+    meuarquivo = request.files['arquivo']
+    if meuarquivo.filename != '':
+        meuarquivo.save('C:/TEMP/' + meuarquivo.filename)
 
+    print(dados.get('cores'))
     return ''

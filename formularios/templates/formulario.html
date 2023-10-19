@@ -5,7 +5,8 @@
     </head>
     <body>
         <h1>Formulário 123123</h1>
-        <form action="/servidor" method="POST">
+        <form action="/servidor" method="POST"
+            enctype="multipart/form-data">
 
             <input type="hidden" name="id" value="1">
 
@@ -31,6 +32,18 @@
                 <label for="">Delicias</label>
                 <input type="checkbox" name="chocolate" value="chocolate">Chocolate
                 <input type="checkbox" name="coca" value="coca">Coquinha Gelada
+            </fieldset>
+            <fieldset>
+                <label for="txtarquivo">Arquivo</label>
+                <input type="file" name="arquivo" id="txtarquivo">
+            </fieldset>
+            <fieldset>
+                <label for="txtcores">Cores</label>
+                <select name="cores" id="txtcores">
+                    <option value="1">Azul</option>
+                    <option value="2">Verde</option>
+                    <option value="3">Vermelho</option>
+                </select>
             </fieldset>
             <input type="submit" value="Enviar">
         </form>
