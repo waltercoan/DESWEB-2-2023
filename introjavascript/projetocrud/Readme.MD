@@ -5,7 +5,11 @@ npm init
 ```
 - Instalar as dependências
 ```
+<<<<<<< HEAD
 npm i express body-parser bootstrap express-handlebars jquery
+=======
+npm i express body-parser bootstrap
+>>>>>>> 33dc337eb50a8e405119a88e02054b97a126edb3
 npm i express-handlebars jquery
 ```
 - Criar o arquivo index.js na pasta raiz do projeto

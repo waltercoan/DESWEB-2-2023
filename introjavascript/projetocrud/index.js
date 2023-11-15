@@ -2,6 +2,7 @@
 const express = require('express')
 // Instanciar a biblioteca do Express
 const app = express()
+
 //importar a biblioteca express-handlebars
 const { engine } = require('express-handlebars')
 const path = require('path')
