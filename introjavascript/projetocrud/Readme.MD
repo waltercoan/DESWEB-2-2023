@@ -5,11 +5,7 @@ npm init
 ```
 - Instalar as dependências
 ```
-<<<<<<< HEAD
 npm i express body-parser bootstrap express-handlebars jquery
-=======
-npm i express body-parser bootstrap
->>>>>>> 33dc337eb50a8e405119a88e02054b97a126edb3
 npm i express-handlebars jquery
 ```
 - Criar o arquivo index.js na pasta raiz do projeto
@@ -105,4 +101,167 @@ app.use('/public', express.static(path.join(__dirname,'public')))
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.js"></script>
 </html>
+```
+
+## Inclusão do menu na aplicação
+- Alterar o arquivo layouts/main.handlebars para incluir o navbar do bootstrap
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+        </nav>
+        {{{body}}}
+    </body>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.js"></script>
+</html>
+```
+
+## Listagem de clientes
+- Alterar o arquivo index.js para incluir uma variável fakedata que simula o banco de dados armazenando uma lista de clientes
+```
+const fakedata = [
+    {
+        id: 1,
+        nome: 'Zezinho da Silva',
+        endereco: "Rua lalala 100",
+        sexo: "Masculino",
+        telefone: '5555-1234'
+    },
+    {
+        id: 2,
+        nome: 'Mariazinha',
+        endereco: "Rua lelelelelel 200",
+        sexo: "Feminino",
+        telefone: '5555-4321'
+    }
+]
+```
+- No arquivo index.js, incluir uma nova rota na aplicação para abrir a tela principal dos clientes
+```
+app.get('/clientes', function(req,res){
+    res.render('cliente/cliente',
+        {listaclientes: fakedata})
+})
+```
+- Criar dentro da pasta views uma nova subpasta chamada cliente
+- Dentro da pasta views/cliente criar um arquivo cliente.handlebars que irá desenhar a tela de listagem dos clientes
+```
+<h1>Clientes</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Sexo</th>
+            <th>Telefone</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each listaclientes}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.nome}}</td>
+            <td>{{this.endereco}}</td>
+            <td>{{this.sexo}}</td>
+            <td>{{this.telefone}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+```
+## Inclusão de um novo cliente
+- Alterar o arquivo cliente.handlebars para incluir um botão para chamar a tela de cadastro de clientes
+```
+<h1>Clientes</h1>
+<a href="./clientes/novo" class="btn btn-primary" >Novo</a>
+```
+- Alterar o arquivo index.js para incluir uma nova rota que irá abrir a tela com o formulário de clientes
+```
+app.get('/clientes/novo', function(req,res){
+    res.render('cliente/formcliente')
+})
+```
+- Criar na pasta views/cliente um novo arquivo chamado formcliente.handlebars com o código para desenhar o formulário de cadastro de clientes
+```
+<h1>Cliente</h1>
+<hr>
+
+<form action="/clientes/save" method="post">
+
+    <div class="form-group">
+        <label for="txtnome">Nome</label>
+        <input type="text" class="form-control"
+            name="nome" id="txtnome">
+    </div>
+    <div class="form-group">
+        <label for="txtendereco">Endereço</label>
+        <input type="text" class="form-control"
+            name="endereco" id="txtendereco">
+    </div>
+    <div class="form-group">
+        <label for="txtsexo">Sexo</label>
+        <input type="text" class="form-control"
+            name="sexo" id="txtsexo">
+    </div>
+    <div class="form-group">
+        <label for="txttelefone">Telefone</label>
+        <input type="text" class="form-control"
+            name="telefone" id="txttelefone">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+
+</form>
+```
+- Alterar o código do index.js para incluir uma nova rota que irá receber os dados do post do formulário, criar um objeto cliente e então salvar na variável fakedata
+```
+app.post('/clientes/save', function(req,res){
+    let novocliente = {
+        id: 0,
+        nome: req.body.nome,
+        endereco: req.body.endereco,
+        sexo: req.body.sexo,
+        telefone: req.body.telefone
+    }
+    fakedata.push(novocliente)
+    res.redirect('/clientes')
+})
+```
+- Ainda no arquivo index.js, alterar o codigo inicial para importar e aplicar a biblioteca do nodejs chamada body-parser para permitir que nodejs receba os dados do formulário
+```
+const bodyparser = require('body-parser')
+
+app.use(bodyparser.urlencoded({extended:false}))
 ```
