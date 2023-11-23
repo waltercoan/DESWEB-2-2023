@@ -8,6 +8,7 @@
             <th>Endereço</th>
             <th>Sexo</th>
             <th>Telefone</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,9 @@
             <td>{{this.endereco}}</td>
             <td>{{this.sexo}}</td>
             <td>{{this.telefone}}</td>
+            <td><a href="/clientes/alterar/{{this.id}}"
+            class="btn btn-warning"
+            >Alterar</a></td>
         </tr>
         {{/each}}
     </tbody>

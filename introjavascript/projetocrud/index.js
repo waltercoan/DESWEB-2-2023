@@ -54,18 +54,39 @@ app.get('/clientes/novo', function(req,res){
 })
 
 app.post('/clientes/save', function(req,res){
-    let novocliente = {
-        id: 0,
-        nome: req.body.nome,
-        endereco: req.body.endereco,
-        sexo: req.body.sexo,
-        telefone: req.body.telefone
-    }
-    fakedata.push(novocliente)
+    
+    let clienteantigo = 
+        fakedata.find(o => o.id == req.body.id)
+    
+    if (clienteantigo != undefined){
+        clienteantigo.nome = req.body.nome
+        clienteantigo.endereco = req.body.endereco
+        clienteantigo.sexo = req.body.sexo
+        clienteantigo.telefone = req.body.telefone
+    }else{
+    
+        let maiorid = Math.max(...fakedata.map(o => o.id))
+
+        let novocliente = {
+            id: maiorid+1,
+            nome: req.body.nome,
+            endereco: req.body.endereco,
+            sexo: req.body.sexo,
+            telefone: req.body.telefone
+        }
+        fakedata.push(novocliente)
+    }   
     res.redirect('/clientes')
 })
 
+app.get('/clientes/alterar/:id',function(req,res){
+    let id = req.params['id']
 
+    let umcliente = fakedata.find(o => o.id == id)
+
+    res.render('cliente/formcliente',
+        {cliente: umcliente})
+})
 
 //Iniciar a aplicação para ouvir a porta 80
 app.listen(80, ()=>{

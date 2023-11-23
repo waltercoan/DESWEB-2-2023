@@ -3,24 +3,32 @@
 
 <form action="/clientes/save" method="post">
 
+    <input type="hidden" 
+    name="id" 
+    value="{{cliente.id}}">
+
     <div class="form-group">
         <label for="txtnome">Nome</label>
         <input type="text" class="form-control"
+            value="{{cliente.nome}}"
             name="nome" id="txtnome">
     </div>
     <div class="form-group">
         <label for="txtendereco">Endereço</label>
         <input type="text" class="form-control"
+            value="{{cliente.endereco}}"
             name="endereco" id="txtendereco">
     </div>
     <div class="form-group">
         <label for="txtsexo">Sexo</label>
         <input type="text" class="form-control"
+            value="{{cliente.sexo}}"
             name="sexo" id="txtsexo">
     </div>
     <div class="form-group">
         <label for="txttelefone">Telefone</label>
         <input type="text" class="form-control"
+            value="{{cliente.telefone}}"
             name="telefone" id="txttelefone">
     </div>
 

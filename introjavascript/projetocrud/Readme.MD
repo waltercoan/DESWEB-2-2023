@@ -265,3 +265,135 @@ const bodyparser = require('body-parser')
 
 app.use(bodyparser.urlencoded({extended:false}))
 ```
+
+## Código para gerar o código sequencial dos clientes
+-  No arquivo index.js, na rota /clientes/save foi incluído o código para construir uma lista de IDs dos clientes e esta lista foi passada para a função MAX da biblioteca Math para encontrar o maior id. Esse valor foi acrescido de 1 para ser o próximo id do novo cliente
+```
+app.post('/clientes/save', function(req,res){
+    let maiorid = Math.max(...fakedata.map(o => o.id))
+
+    let novocliente = {
+        id: maiorid+1,
+        nome: req.body.nome,
+        endereco: req.body.endereco,
+        sexo: req.body.sexo,
+        telefone: req.body.telefone
+    }
+    fakedata.push(novocliente)
+    res.redirect('/clientes')
+})
+```
+
+## Atleração de clientes
+- No arquivo cliente.handlebars foi alterado o layout para incluir uma nova coluna na tabela, e um botao de alterar que passa como parâmetro da URL o id do cliente que deseja ser alterado
+```
+<h1>Clientes</h1>
+<a href="./clientes/novo" class="btn btn-primary" >Novo</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Sexo</th>
+            <th>Telefone</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each listaclientes}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.nome}}</td>
+            <td>{{this.endereco}}</td>
+            <td>{{this.sexo}}</td>
+            <td>{{this.telefone}}</td>
+            <td><a href="/clientes/alterar/{{this.id}}"
+            class="btn btn-warning"
+            >Alterar</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+```
+- No arquivo index.js foi inclusa uma nova rota que recebe o id do cliente que se deseja alterar, procura esse cliente pelo id na lista de clientes, e encaminha o usuario para a tela de formulário com os dados do cliente.
+```
+app.get('/clientes/alterar/:id',function(req,res){
+    let id = req.params['id']
+
+    let umcliente = fakedata.find(o => o.id == id)
+
+    res.render('cliente/formcliente',
+        {cliente: umcliente})
+})
+```
+- O arquivo formcliente.handlebars foi alterado para: 
+   - inclui o campo id como hidden para que o id do cliente seja enviado de forma escondida no formulário
+   - em todos os campos input foi realizado o binding (cola) do valor do cliente recebido do backend para preencher cada campo de texto com o seu respectivo valor
+```
+<h1>Cliente</h1>
+<hr>
+
+<form action="/clientes/save" method="post">
+
+    <input type="hidden" 
+    name="id" 
+    value="{{cliente.id}}">
+
+    <div class="form-group">
+        <label for="txtnome">Nome</label>
+        <input type="text" class="form-control"
+            value="{{cliente.nome}}"
+            name="nome" id="txtnome">
+    </div>
+    <div class="form-group">
+        <label for="txtendereco">Endereço</label>
+        <input type="text" class="form-control"
+            value="{{cliente.endereco}}"
+            name="endereco" id="txtendereco">
+    </div>
+    <div class="form-group">
+        <label for="txtsexo">Sexo</label>
+        <input type="text" class="form-control"
+            value="{{cliente.sexo}}"
+            name="sexo" id="txtsexo">
+    </div>
+    <div class="form-group">
+        <label for="txttelefone">Telefone</label>
+        <input type="text" class="form-control"
+            value="{{cliente.telefone}}"
+            name="telefone" id="txttelefone">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+
+</form>
+```
+- O arquivo index.js foi alterado para que o código da rota /clientes/save realize tanto a operação de UPDATE (atualização), quanto INSERT (cadastro de um novo cliente)
+```
+app.post('/clientes/save', function(req,res){
+    
+    let clienteantigo = 
+        fakedata.find(o => o.id == req.body.id)
+    
+    if (clienteantigo != undefined){
+        clienteantigo.nome = req.body.nome
+        clienteantigo.endereco = req.body.endereco
+        clienteantigo.sexo = req.body.sexo
+        clienteantigo.telefone = req.body.telefone
+    }else{
+    
+        let maiorid = Math.max(...fakedata.map(o => o.id))
+
+        let novocliente = {
+            id: maiorid+1,
+            nome: req.body.nome,
+            endereco: req.body.endereco,
+            sexo: req.body.sexo,
+            telefone: req.body.telefone
+        }
+        fakedata.push(novocliente)
+    }   
+    res.redirect('/clientes')
+})
+```
